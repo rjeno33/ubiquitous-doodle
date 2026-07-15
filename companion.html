@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title> Colonoscopy Companion</title>
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<div class="box">
+<hr>
+<h1> Colonoscopy Companion</h1>
+<p> Helping you prepare for your appointment</p>
+<h2>⭐ Prep Points: <span id="score">0</span></h2>
+<h3>Level: <span id="level">Prep Padawan</span></h3>
+<h2>Preparation Progress</h2>
+
+<div id="progressBar">
+
+    <div id="progressFill"></div>
+
+</div>
+
+<h2>🏆 Achievements</h2>
+
+<div id="achievementCabinet"></div>
+
+<h2> Appointment Details</h2>
+<label for="appointmentDate"> Choose your appointment date and time </label>
+<input id="appointmentDate" type="datetime-local"/>
+<button id="createPlanButton">Create My Plan</button>
+<button id="clearDateButton">Clear Date</button>
+
+<div id="plan"></div>
+<hr>
+<h2 id="helpful-info">Helpful information</h2>
+<a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjfvtzkmb6VAxUOQkEAHVxUGD8QFnoECCQQAQ&url=https%3A%2F%2Felht.nhs.uk%2Fapplication%2Ffiles%2F3315%2F8556%2F0327%2FDIET-002-LowFibrelowresiduediet-2019.pdf&usg=AOvVaw0Uk25ESOMN47N5drxUEGEp&opi=89978449" target="_blank"> Low Residue Diet </a>
+<hr>
+<p> Created By </p>
+<p> Ryan Jennings </p>
+</div>
+
+
+
+<hr>
+
+<div id="achievementPopup" class="hidden">
+    <div id="achievementIcon">🏆</div>
+    <h2 id="achievementTitle">Achievement Unlocked!</h2>
+    <p id="achievementText"></p>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
