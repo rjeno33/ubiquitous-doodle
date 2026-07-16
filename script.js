@@ -1,4 +1,6 @@
-/// Variables ///
+// =========================
+// Variables
+// =========================
 
 let perfectTenUnlocked = false;
 let championUnlocked = false;
@@ -104,13 +106,13 @@ function renderAchievements() {
 const cabinet = document.getElementById("achievementCabinet");
 
 cabinet.innerHTML =
-        "<p>" + (perfectTenUnlocked ? "ðŸ”Ÿ" : "ðŸ”’") + " Perfect Ten</p>" +
-        "<p>" + (championUnlocked ? "ðŸ†" : "ðŸ”’") + " Colonoscopy Champion</p>" +
-        "<p>" + (waterUnlocked ? "ðŸ’§" : "ðŸ”’") + " Water Master</p>" +
-        "<p>" + (sennaUnlocked ? "ðŸ’Š" : "ðŸ”’") + " Senna Success</p>" +
-        "<p>" + (dietUnlocked ? "ðŸ•" : "ðŸ”’") + " Diet Hero</p>" +
-        "<p>" + (prepUnlocked ? "ðŸ§ª" : "ðŸ”’") + " Prep Professional</p>" +
-        "<p>" + (fastUnlocked ? "ðŸŽï¸" : "ðŸ”’") + " The Fasting and the Furious</p>";
+        "<p>" + (perfectTenUnlocked ? "<i class='fa-solid fa-star'></i>" : "<i class='fa-solid fa-lock'></i>") + " Perfect Ten</p>" +
+        "<p>" + (championUnlocked ? "<i class='fa-solid fa-trophy'></i>" : "<i class='fa-solid fa-lock'></i>") + " Colonoscopy Champion</p>" +
+        "<p>" + (waterUnlocked ? "<i class='fa-solid fa-droplet'></i>" : "<i class='fa-solid fa-lock'></i>") + " Hydration Hero</p>" +
+        "<p>" + (sennaUnlocked ? "<i class='fa-solid fa-pills'></i>" : "<i class='fa-solid fa-lock'></i>") + " Senna Superstar</p>" +
+        "<p>" + (dietUnlocked ? "<i class='fa-solid fa-utensils'></i>" : "<i class='fa-solid fa-lock'></i>") + " Low Residue Legend</p>" +
+        "<p>" + (prepUnlocked ? "<i class='fa-solid fa-flask'></i>" : "<i class='fa-solid fa-lock'></i>") + " Prep Professional</p>" +
+        "<p>" + (fastUnlocked ? "<i class='fa-solid fa-truck-fast'></i>" : "<i class='fa-solid fa-lock'></i>") + " The Fasting and the Furious</p>";
 
 }
 
@@ -230,7 +232,7 @@ function checkAchievements() {
 
         showAchievement("Perfect 10",
                         "You completed 10 tasks! Keep going!",
-                        "ðŸ”Ÿ");
+                        "<i class ='fa-solid fa-star'></i>");
         perfectTenUnlocked = true;
 
     }
@@ -241,7 +243,7 @@ function checkAchievements() {
 
         showAchievement("Colonoscopy Champion!",
                         "You're Colonoscopy ready! Amazing work!",
-                        "ðŸ†");
+                        "<i class ='fa-solid fa-trophy'></i>");
         championUnlocked = true;
 
     }
@@ -252,7 +254,7 @@ function checkAchievements() {
 
         showAchievement("Hydration Hero",
                         "You drank every litre",
-                         "ðŸ’§");
+                         "<i class ='fa-solid fa-droplet'></i>");
          waterUnlocked = true;
     }
 
@@ -262,7 +264,7 @@ function checkAchievements() {
 
         showAchievement("Senna Success!",
                         "You took all the Senna doses",
-                         "ðŸ’Š");
+                         "<i class ='fa-solid fa-pills'></i>");
         sennaUnlocked = true;
     }
 
@@ -272,7 +274,7 @@ function checkAchievements() {
 
         showAchievement("Low Residue Legend!",
                         "You followed the low residue diet all week",
-                         "ðŸ•");
+                         "<i class ='fa-solid fa-utensils'></i>");
         dietUnlocked = true;
     }
 
@@ -282,7 +284,7 @@ if (  taskTotals.fast > 0 &&
 
     showAchievement(" The Fasting and the Furious!",
                     "You commenced the fast",
-                     "ðŸŽï¸");
+                     "<i class='fa-solid fa-truck-fast'></i>");
     fastUnlocked = true;
 }
 
@@ -293,7 +295,7 @@ if (taskTotals.prep > 0 &&
 
     showAchievement("Prep Professional!",
                     " You defeated the prep! Well done!",
-                    "ðŸ§ª");
+                    "<i class='fa-solid fa-flask'></i>");
     prepUnlocked = true;
 
 
@@ -310,7 +312,7 @@ function showAchievement(title, text, icon) {
 
     achievementTitle.textContent = title;
     achievementText.textContent = text;
-    achievementIcon.textContent = icon;
+    achievementIcon.innerHTML = icon;
 
     achievementPopup.classList.remove("hidden");
     achievementPopup.classList.add("show");
