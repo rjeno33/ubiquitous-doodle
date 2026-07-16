@@ -75,6 +75,38 @@ min-height:44px;
 
 }
 
+.fa-trophy{
+    color:gold;
+}
+
+.fa-star{
+    color:orange;
+}
+
+.fa-lock{
+    color:silver;
+}
+
+.fa-flask{
+     color:lightgreen;
+}
+
+.fa-utensils{
+      color:#FF0505;
+}
+
+.fa-truck-fast{
+       color:purple;
+}
+
+.fa-droplet{
+      color:blue;
+}
+
+.fa-pills{
+     color:#82FF05
+}
+
 #progressBar {
 
     width: 100%;
