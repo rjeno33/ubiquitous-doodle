@@ -353,7 +353,7 @@ const dayId =
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
     if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i> TODAY <i class ='fa-solid fa-star'></i></h2>";
+plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i>TODAY<i class ='fa-solid fa-star'></i></h2>";
 
 }
 
@@ -391,7 +391,7 @@ function addDayBefore(date, appointmentHour) {
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
 if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i> TODAY <i class ='fa-solid fa-star'></i></h2>";
+plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i>TODAY<i class ='fa-solid fa-star'></i></h2>";
 
 }
     // Daytime appointment (08:00â€“16:59)
@@ -466,7 +466,7 @@ function addAppointmentDay(date, appointmentHour) {
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
  if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i> TODAY <i class ='fa-solid fa-star'></i></h2>";
+plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i>TODAY<i class ='fa-solid fa-star'></i></h2>";
 
 }
 
