@@ -79,6 +79,10 @@ min-height:44px;
     color:gold;
 }
 
+.fa-heart{
+     color:red;
+}
+
 .fa-star{
     color:orange;
 }
@@ -107,6 +111,70 @@ min-height:44px;
      color:#82FF05
 }
 
+#faqHeader{
+
+    cursor:pointer;
+
+    user-select:none;
+
+}
+
+#faqHeader:hover{
+
+    color:#78BE20;
+
+}
+
+#faqContent{
+
+    overflow:hidden;
+
+    max-height:1000px;
+
+    transition:max-height .4s ease;
+
+}
+
+#faqContent.closed{
+
+    max-height:0;
+
+}
+
+.faqItem{
+
+    margin:15px 0;
+
+}
+
+.faqQuestion{
+
+    width:100%;
+
+    padding:12px;
+
+    font-size:16px;
+
+    text-align:left;
+
+    background:#f5f5f5;
+
+    border:none;
+
+}
+
+.faqAnswer{
+
+    display:none;
+
+    padding:15px;
+
+    background:white;
+
+    text-align:left;
+
+}
+
 #progressBar {
 
     width: 100%;
@@ -129,6 +197,36 @@ min-height:44px;
     background-color: #78BE20;
 
     transition: width 0.5s;
+
+}
+
+#achievementHeader{
+
+    cursor:pointer;
+
+    user-select:none;
+
+}
+
+#achievementHeader:hover{
+
+    color:#78BE20;
+
+}
+
+#achievementCabinet{
+
+    overflow:hidden;
+
+    max-height:500px;
+
+    transition:max-height .4s ease;
+
+}
+
+#achievementCabinet.closed{
+
+    max-height:0;
 
 }
 
@@ -228,5 +326,128 @@ input[type="checkbox"]{
         margin-top:10px;
 
     }
+
+}
+
+#completion{
+
+    margin-top:30px;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    background:white;
+
+    display:none;
+
+}
+
+#feedbackForm{
+
+    display:none;
+
+    margin-top:30px;
+
+    padding:25px;
+
+    background:white;
+
+    border-radius:15px;
+
+    box-shadow:0px 5px 15px gray;
+
+}
+
+textarea{
+
+    width:100%;
+
+    border-radius:10px;
+
+    padding:10px;
+
+    resize:vertical;
+
+    box-sizing:border-box;
+
+}
+
+select{
+
+    padding:8px;
+
+    border-radius:8px;
+
+}
+
+#starRating{
+
+    font-size:35px;
+
+    margin:15px 0;
+
+}
+
+.star{
+
+    cursor:pointer;
+
+    margin:5px;
+
+}
+
+.star{
+
+    cursor:pointer;
+    margin:5px;
+    transition:transform .2s ease,color .2s ease;
+
+}
+
+.star:hover{
+
+    transform:scale(1.2);
+
+}
+
+.star .fa-solid{
+
+    color:gold;
+
+}
+
+.star .fa-regular{
+
+    color:lightgray;
+
+}
+
+#ratingText{
+
+    font-size:18px;
+    font-weight:bold;
+    color:#555;
+    margin-top:10px;
+    transition:all .2s ease;
+
+}
+
+.smallText{
+
+    font-size:14px;
+    color:#666;
+
+}
+
+#welcomeScreen{
+
+    text-align:center;
+
+}
+
+.hidden{
+
+    display:none;
 
 }
