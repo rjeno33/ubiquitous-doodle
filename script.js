@@ -12,6 +12,9 @@ let dietUnlocked = false;
 let prepUnlocked = false;
 let fastUnlocked = false;
 
+
+let rating = 0;
+
 const achievementPopup = document.getElementById("achievementPopup");
 const achievementTitle = document.getElementById("achievementTitle");
 const achievementText = document.getElementById("achievementText");
@@ -22,6 +25,36 @@ const appointmentDate = document.getElementById("appointmentDate");
 const clearDateButton = document.getElementById("clearDateButton");
 const plan = document.getElementById("plan");
 const progressFill = document.getElementById("progressFill");
+const faqHeader = document.getElementById("faqHeader");
+const faqContent = document.getElementById("faqContent");
+const faqArrow = document.getElementById("faqArrow");
+const ratingText = document.getElementById("ratingText");
+
+const achievementHeader =
+document.getElementById("achievementHeader");
+
+const achievementCabinet =
+document.getElementById("achievementCabinet");
+
+const achievementArrow =
+document.getElementById("achievementArrow");
+
+const achievementCount =
+document.getElementById("achievementCount");
+
+const startButton = document.getElementById("startButton");
+
+startButton.addEventListener("click", function(){
+
+    document.getElementById("welcomeScreen")
+        .style.display = "none";
+
+    document.getElementById("mainApp")
+        .style.display = "block";
+
+    localStorage.setItem("welcomeSeen","true");
+
+});
 
 
 const taskProgress = {
@@ -45,6 +78,179 @@ const taskTotals = {
 // =========================
 // Functions
 // =========================
+
+
+// Text rating //
+
+function updateRatingText(value){
+
+    switch(value){
+
+        case 1:
+            ratingText.textContent = "Needs Improvement ðŸ˜Ÿ";
+            break;
+
+        case 2:
+            ratingText.textContent = "Fair ðŸ™‚";
+            break;
+
+        case 3:
+            ratingText.textContent = "Good ðŸ‘";
+            break;
+
+        case 4:
+            ratingText.textContent = "Very Good ðŸ˜„";
+            break;
+
+        case 5:
+            ratingText.textContent = "Excellent! ðŸŒŸ";
+            break;
+
+        default:
+            ratingText.textContent = "Tap a star to rate the app";
+
+    }
+
+}
+
+//Star Rating //
+
+function initialiseStarRating() {
+
+    const stars = document.querySelectorAll(".star");
+
+    stars.forEach(function(star) {
+
+        // Hover preview
+        star.addEventListener("mouseenter", function() {
+
+            const hoverValue = Number(star.dataset.value);
+            updateRatingText(hoverValue);
+
+            stars.forEach(function(s) {
+
+                if (Number(s.dataset.value) <= hoverValue) {
+
+                    s.innerHTML = "<i class='fa-solid fa-star'></i>";
+
+                } else {
+
+                    s.innerHTML = "<i class='fa-regular fa-star'></i>";
+
+                }
+
+            });
+
+        });
+
+        // Save rating
+        star.addEventListener("click", function() {
+
+            rating = Number(star.dataset.value);
+            updateRatingText(rating);
+
+        });
+
+    });
+
+    // Restore saved rating when leaving the star area
+    document.getElementById("starRating")
+        .addEventListener("mouseleave", function() {
+            
+            updateRatingText(rating);
+            stars.forEach(function(s) {
+
+                if (Number(s.dataset.value) <= rating) {
+
+                    s.innerHTML = "<i class='fa-solid fa-star'></i>";
+
+                } else {
+
+                    s.innerHTML = "<i class='fa-regular fa-star'></i>";
+
+                }
+
+            });
+
+        });
+
+}
+
+// Submit Feedback //
+
+function submitFeedback(){
+
+    document.getElementById("feedbackForm").innerHTML =
+
+    "<h2>Thank You!</h2>" +
+
+    "<p>Your feedback will help improve Colonoscopy Companion for future patients.</p>" +
+
+    "<i class='fa-solid fa-heart fa-3x'></i>";
+     console.log("Rating:", rating);
+
+}
+
+// Feedback Form //
+
+function showFeedback(){
+
+    document.getElementById("completion").style.display = "none";
+
+    document.getElementById("feedbackForm").style.display = "block";
+
+}
+
+// Show Completion page //
+
+function checkCompletion() {
+
+    const totalTasks =
+        document.querySelectorAll("input[type='checkbox']").length;
+
+    if (completedTasks === totalTasks) {
+
+        showCompletionPage();
+
+    }
+
+}
+
+// Competion Page //
+
+function showCompletionPage() {
+
+    const completion = document.getElementById("completion");
+
+    completion.innerHTML =
+
+    "<h2><i class='fa-solid fa-trophy'></i> Congratulations!</h2>" +
+
+    "<p>You have completed every preparation task.</p>" +
+
+    "<p>Good luck with your procedure.</p>" +
+
+    "<hr>" +
+
+    "<h3>Remember to:</h3>" +
+
+    "<p>âœ” Bring your appointment letter</p>" +
+
+    "<p>âœ” Bring your medication list</p>" +
+
+    "<p>âœ” Arrange transport home if you're having sedation</p>" +
+
+    "<p>âœ” Arrive a little early</p>" +
+
+    "<br>" +
+
+    "<button id='feedbackButton'>Leave Feedback</button>";
+
+    document
+        .getElementById("feedbackButton")
+        .addEventListener("click",showFeedback);
+
+}
 
 // Update level //
 
@@ -70,6 +276,22 @@ level="Grand Poobah of Prep";
 
 
 document.getElementById("level").textContent=level;
+
+}
+
+function toggleAchievements(){
+
+    achievementCabinet.classList.toggle("closed");
+
+    if(achievementCabinet.classList.contains("closed")){
+
+        achievementArrow.textContent="â–¼";
+
+    }else{
+
+        achievementArrow.textContent="â–²";
+
+    }
 
 }
 
@@ -114,6 +336,19 @@ cabinet.innerHTML =
         "<p>" + (prepUnlocked ? "<i class='fa-solid fa-flask'></i>" : "<i class='fa-solid fa-lock'></i>") + " Prep Professional</p>" +
         "<p>" + (fastUnlocked ? "<i class='fa-solid fa-truck-fast'></i>" : "<i class='fa-solid fa-lock'></i>") + " The Fasting and the Furious</p>";
 
+let unlocked = 0;
+
+if(perfectTenUnlocked) unlocked++;
+if(championUnlocked) unlocked++;
+if(waterUnlocked) unlocked++;
+if(sennaUnlocked) unlocked++;
+if(dietUnlocked) unlocked++;
+if(prepUnlocked) unlocked++;
+if(fastUnlocked) unlocked++;
+
+achievementCount.textContent =
+"(" + unlocked + "/7)";
+
 }
 
 function resetPlan() {
@@ -146,6 +381,8 @@ function resetPlan() {
 
 function loadProgress() {
 
+achievementCabinet.classList.add("closed");
+
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
     checkboxes.forEach(function(checkbox) {
@@ -172,6 +409,18 @@ function loadProgress() {
 
     const percentage = (completedTasks / checkboxes.length) * 100;
     progressFill.style.width = percentage + "%";
+
+if(localStorage.getItem("welcomeSeen")==="true"){
+
+    document.getElementById("welcomeScreen").style.display="none";
+    document.getElementById("mainApp").style.display="block";
+
+}else{
+
+    document.getElementById("welcomeScreen").style.display="block";
+    document.getElementById("mainApp").style.display="none";
+
+}
 
 }
 
@@ -212,7 +461,8 @@ function addCheckboxListeners() {
 
             checkAchievements();
             updateLevel();
-
+            checkCompletion();
+           completion.style.display="block";
         });
 
     });
@@ -314,6 +564,8 @@ function showAchievement(title, text, icon) {
     achievementText.textContent = text;
     achievementIcon.innerHTML = icon;
 
+achievementCabinet.classList.remove("closed");
+achievementArrow.textContent = "â–²";
     achievementPopup.classList.remove("hidden");
     achievementPopup.classList.add("show");
 
@@ -353,7 +605,7 @@ const dayId =
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
     if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i>TODAY<i class ='fa-solid fa-star'></i></h2>";
+plan.innerHTML += "<h2>â­ TODAY â­</h2>";
 
 }
 
@@ -391,7 +643,7 @@ function addDayBefore(date, appointmentHour) {
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
 if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i>TODAY<i class ='fa-solid fa-star'></i></h2>";
+plan.innerHTML += "<h2>â­ TODAY â­</h2>";
 
 }
     // Daytime appointment (08:00â€“16:59)
@@ -466,7 +718,7 @@ function addAppointmentDay(date, appointmentHour) {
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
  if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2><i class ='fa-solid fa-star'></i>TODAY<i class ='fa-solid fa-star'></i></h2>";
+plan.innerHTML += "<h2>â­ TODAY</h2>";
 
 }
 
@@ -564,6 +816,8 @@ document.querySelectorAll("[data-type='fast']").length;
 
     loadProgress();
 
+    addFAQListeners();
+
     addCheckboxListeners();
 
     checkAchievements();
@@ -571,6 +825,65 @@ document.querySelectorAll("[data-type='fast']").length;
     renderAchievements();
 }
 
+
+//Toggle Faq//
+
+function toggleFAQ(){
+
+    faqContent.classList.toggle("closed");
+
+    if(faqContent.classList.contains("closed")){
+
+        faqArrow.textContent="â–¼";
+
+    }else{
+
+        faqArrow.textContent="â–²";
+
+    }
+
+}
+
+function addFAQListeners() {
+
+    const questions = document.querySelectorAll(".faqQuestion");
+
+    questions.forEach(function(question) {
+
+        question.addEventListener("click", function() {
+
+            const answer = question.nextElementSibling;
+
+            // Close every other answer
+            document.querySelectorAll(".faqAnswer").forEach(function(item) {
+
+                if (item !== answer) {
+                    item.style.display = "none";
+                }
+
+            });
+
+            // Toggle the clicked answer
+            if (answer.style.display === "block") {
+
+                answer.style.display = "none";
+
+            } else {
+
+                answer.style.display = "block";
+
+            }
+
+        });
+
+    });
+
+}
+
+
+// FAQ Event Listener //
+
+faqHeader.addEventListener("click",toggleFAQ);
 
 // =========================
 // Create Plan Button
@@ -590,7 +903,7 @@ createPlan();
 });
 
     
-
+achievementHeader.addEventListener("click",toggleAchievements);
    
 
 // =========================
@@ -627,5 +940,14 @@ window.addEventListener("load", function () {
         createPlan();
 
     }
+
+});
+
+document.getElementById("submitFeedback")
+.addEventListener("click", submitFeedback);
+
+window.addEventListener("load",function(){
+
+    initialiseStarRating();
 
 });
