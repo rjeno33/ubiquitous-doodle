@@ -10,6 +10,41 @@
 
 <body>
 <div class="box">
+
+<div id="welcomeScreen">
+
+    <h1>Colonoscopy Companion</h1>
+
+    <p>
+        Welcome! This app will guide you through your preparation,
+        one day at a time.
+    </p>
+
+    <h3>Features</h3>
+
+    <p><i class="fa-solid fa-calendar-days"></i> Personalised preparation plan</p>
+
+    <p><i class="fa-solid fa-list-check"></i> Daily task checklist</p>
+
+    <p><i class="fa-solid fa-trophy"></i> Achievement system</p>
+
+    <p><i class="fa-solid fa-circle-question"></i> Helpful FAQs</p>
+
+    <p><i class="fa-solid fa-heart"></i> Help improve the app with feedback</p>
+
+    <hr>
+
+    <p class="smallText">
+        This app supports your preparation but does not replace the
+        instructions given by your hospital.
+    </p>
+
+    <button id="startButton">
+        Create My Preparation Plan
+    </button>
+
+</div>
+<div id="mainApp">
 <hr>
 <h1> Colonoscopy Companion</h1>
 <p> Helping you prepare for your appointment</p>
@@ -23,9 +58,55 @@
 
 </div>
 
-<h2>🏆 Achievements</h2>
+<h2 id="achievementHeader">
+    <i class="fa-solid fa-trophy"></i>
+    Achievements
+    <span id="achievementCount">(0/7)</span>
+    <span id="achievementArrow">▼</span>
+</h2>
 
-<div id="achievementCabinet"></div>
+<div id="achievementCabinet">
+</div>
+
+<h2 id="faqHeader">
+    <i class="fa-solid fa-circle-question"></i>
+    Frequently Asked Questions
+    <span id="faqArrow">▼</span>
+</h2>
+
+<div id="faqContent" class="closed">
+
+    <div class="faqItem">
+        <button class="faqQuestion">
+            Can I drink tea or coffee?
+        </button>
+
+        <div class="faqAnswer">
+            Yes. Tea and coffee without milk is considered a clear fluid once you've started the clear fluid stage.
+        </div>
+    </div>
+
+    <div class="faqItem">
+        <button class="faqQuestion">
+            Can I drink coffee?
+        </button>
+
+        <div class="faqAnswer">
+            Black coffee is usually allowed. Coffee with milk is not allowed once your fasting instructions begin.
+        </div>
+    </div>
+
+    <div class="faqItem">
+        <button class="faqQuestion">
+            Why do I need a low residue diet?
+        </button>
+
+        <div class="faqAnswer">
+            A low residue diet leaves less material inside your bowel, making the bowel preparation more effective.
+        </div>
+    </div>
+
+</div>
 
 <h2> Appointment Details</h2>
 <label for="appointmentDate"> Choose your appointment date and time </label>
@@ -34,6 +115,71 @@
 <button id="clearDateButton">Clear Date</button>
 
 <div id="plan"></div>
+<div id="completion"></div>
+<div id="feedbackForm" style="display:none;">
+
+    <h2><i class="fa-solid fa-comments"></i> Feedback</h2>
+
+    <p>How easy was the app to use?</p>
+
+<div id="starRating">
+
+    <span class="star" data-value="1">
+        <i class="fa-regular fa-star"></i>
+    </span>
+
+    <span class="star" data-value="2">
+        <i class="fa-regular fa-star"></i>
+    </span>
+
+    <span class="star" data-value="3">
+        <i class="fa-regular fa-star"></i>
+    </span>
+
+    <span class="star" data-value="4">
+        <i class="fa-regular fa-star"></i>
+    </span>
+
+    <span class="star" data-value="5">
+        <i class="fa-regular fa-star"></i>
+    </span>
+
+<p id="ratingText">Tap a star to rate the app</p>
+
+</div>
+
+    <p>Did this app help you prepare?</p>
+
+    <label>
+        <input type="radio" name="helpful" value="Yes">
+        Yes
+    </label>
+
+    <label>
+        <input type="radio" name="helpful" value="Mostly">
+        Mostly
+    </label>
+
+    <label>
+        <input type="radio" name="helpful" value="No">
+        No
+    </label>
+
+    <br><br>
+
+    <p>Any suggestions?</p>
+
+    <textarea id="comments"
+              rows="5"
+              placeholder="Tell us how we could improve..."></textarea>
+
+    <br><br>
+
+    <button id="submitFeedback">
+        Submit Feedback
+    </button>
+
+</div>
 <hr>
 <h2 id="helpful-info">Helpful information</h2>
 <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjfvtzkmb6VAxUOQkEAHVxUGD8QFnoECCQQAQ&url=https%3A%2F%2Felht.nhs.uk%2Fapplication%2Ffiles%2F3315%2F8556%2F0327%2FDIET-002-LowFibrelowresiduediet-2019.pdf&usg=AOvVaw0Uk25ESOMN47N5drxUEGEp&opi=89978449" target="_blank"> Low Residue Diet </a>
@@ -52,7 +198,7 @@
 Achievement Unlocked!</h2>
     <p id="achievementText"></p>
 </div>
-
+</div>
 <script src="script.js"></script>
 
 </body>
