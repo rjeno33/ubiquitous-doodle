@@ -87,23 +87,23 @@ function updateRatingText(value){
     switch(value){
 
         case 1:
-            ratingText.textContent = "Needs Improvement ðŸ˜Ÿ";
+            ratingText.innerHTML ="<p> Needs Improvement</p>";
             break;
 
         case 2:
-            ratingText.textContent = "Fair ðŸ™‚";
+            ratingText.innerHTML = "Fair ðŸ™‚";
             break;
 
         case 3:
-            ratingText.textContent = "Good ðŸ‘";
+            ratingText.innerHTML = "Good ðŸ‘";
             break;
 
         case 4:
-            ratingText.textContent = "Very Good ðŸ˜„";
+            ratingText.innerHTML = "Very Good ðŸ˜„";
             break;
 
         case 5:
-            ratingText.textContent = "Excellent! ðŸŒŸ";
+            ratingText.innerHTML = "Excellent! ðŸŒŸ";
             break;
 
         default:
@@ -180,14 +180,37 @@ function initialiseStarRating() {
 
 function submitFeedback(){
 
-    document.getElementById("feedbackForm").innerHTML =
+    const helpful =
+        document.querySelector(
+            "input[name='helpful']:checked"
+        );
 
-    "<h2>Thank You!</h2>" +
+    fetch("https://script.google.com/macros/s/AKfycbx5Brilc1YKA0z9BthEE7ywrGP6RL8OCBJvLpzTamp1zvL2FzpZPkxKuWFLpg9VgmDcqQ/exec",{
 
-    "<p>Your feedback will help improve Colonoscopy Companion for future patients.</p>" +
+        method:"POST",
 
-    "<i class='fa-solid fa-heart fa-3x'></i>";
-     console.log("Rating:", rating);
+        body:JSON.stringify({
+
+            rating:rating,
+
+            helpful: helpful ? helpful.value : "",
+
+            comments:
+                document.getElementById("comments").value
+
+        })
+
+    })
+
+    .then(function(){
+
+        document.getElementById("feedbackForm").innerHTML=
+
+        "<h2>â¤ï¸ Thank You!</h2>" +
+
+        "<p>Your feedback has been submitted.</p>";
+
+    });
 
 }
 
@@ -285,11 +308,11 @@ function toggleAchievements(){
 
     if(achievementCabinet.classList.contains("closed")){
 
-        achievementArrow.textContent="â–¼";
+        achievementArrow.innerHTML="<i class='fa-regular fa-square-caret-down'></i>";
 
     }else{
 
-        achievementArrow.textContent="â–²";
+        achievementArrow.innerHTML="<i class='fa-regular fa-square-caret-up'></i>";
 
     }
 
@@ -565,7 +588,7 @@ function showAchievement(title, text, icon) {
     achievementIcon.innerHTML = icon;
 
 achievementCabinet.classList.remove("closed");
-achievementArrow.textContent = "â–²";
+achievementArrow.innerHTML = "<i class='fa-regular fa-square-caret-up'></i>";
     achievementPopup.classList.remove("hidden");
     achievementPopup.classList.add("show");
 
@@ -605,7 +628,7 @@ const dayId =
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
     if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2>â­ TODAY â­</h2>";
+plan.innerHTML += "<h2><i class='fa-solid fa-star'></i> TODAY <i class='fa-solid fa-star'></i></h2>";
 
 }
 
@@ -643,7 +666,7 @@ function addDayBefore(date, appointmentHour) {
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
 if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2>â­ TODAY â­</h2>";
+plan.innerHTML += "<h2> <i class='fa-solid fa-star'></i> TODAY <i class='fa-solid fa-star'></i> </h2>";
 
 }
     // Daytime appointment (08:00â€“16:59)
@@ -718,7 +741,7 @@ function addAppointmentDay(date, appointmentHour) {
     plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
  if(date.toDateString() === new Date().toDateString()){
 
-plan.innerHTML += "<h2>â­ TODAY</h2>";
+plan.innerHTML += "<h2><i class='fa-solid fa-star'></i> TODAY <i class='fa-solid fa-star'></i></h2>";
 
 }
 
@@ -834,11 +857,11 @@ function toggleFAQ(){
 
     if(faqContent.classList.contains("closed")){
 
-        faqArrow.textContent="â–¼";
+        faqArrow.innerHTML="<i class='fa-regular fa-square-caret-down'></i>";
 
     }else{
 
-        faqArrow.textContent="â–²";
+        faqArrow.innerHTML="<i class='fa-regular fa-square-caret-up'></i>";
 
     }
 
