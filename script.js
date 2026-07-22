@@ -91,19 +91,19 @@ function updateRatingText(value){
             break;
 
         case 2:
-            ratingText.innerHTML = "Fair ðŸ™‚";
+            ratingText.innerHTML = "Fair 🙂";
             break;
 
         case 3:
-            ratingText.innerHTML = "Good ðŸ‘";
+            ratingText.innerHTML = "Good 👍";
             break;
 
         case 4:
-            ratingText.innerHTML = "Very Good ðŸ˜„";
+            ratingText.innerHTML = "Very Good 😄";
             break;
 
         case 5:
-            ratingText.innerHTML = "Excellent! ðŸŒŸ";
+            ratingText.innerHTML = "Excellent! 🌟";
             break;
 
         default:
@@ -178,37 +178,55 @@ function initialiseStarRating() {
 
 // Submit Feedback //
 
-function submitFeedback(){
+function submitFeedback() {
 
     const helpful =
-        document.querySelector(
-            "input[name='helpful']:checked"
-        );
+        document.querySelector("input[name='helpful']:checked");
 
-    fetch("https://script.google.com/macros/s/AKfycbx5Brilc1YKA0z9BthEE7ywrGP6RL8OCBJvLpzTamp1zvL2FzpZPkxKuWFLpg9VgmDcqQ/exec",{
+    const firstTime =
+        document.querySelector("input[name='firstTime']:checked");
 
-        method:"POST",
+    const anxiety =
+        document.querySelector("input[name='anxiety']:checked");
 
-        body:JSON.stringify({
+    const recommend =
+        document.querySelector("input[name='recommend']:checked");
 
-            rating:rating,
+    fetch("https://script.google.com/macros/s/AKfycby4FTW3-gXQSFUCASoA3NftFtT62LwO5gQgGBjBSjUy_Cp-JuHXGJXbf1fxPdSTFqDR/exec", {
+
+        method: "POST",
+
+        body: JSON.stringify({
+
+            ageGroup: document.getElementById("ageGroup").value,
+
+            gender: document.getElementById("gender").value,
+
+            firstTime: firstTime ? firstTime.value : "",
+
+            rating: rating,
 
             helpful: helpful ? helpful.value : "",
 
-            comments:
-                document.getElementById("comments").value
+            anxiety: anxiety ? anxiety.value : "",
+
+            recommend: recommend ? recommend.value : "",
+
+            device: document.getElementById("device").value,
+
+            comments: document.getElementById("comments").value
 
         })
 
     })
 
-    .then(function(){
+    .then(function() {
 
-        document.getElementById("feedbackForm").innerHTML=
+        document.getElementById("feedbackForm").innerHTML =
 
-        "<h2>â¤ï¸ Thank You!</h2>" +
+            "<h2>❤️ Thank You!</h2>" +
 
-        "<p>Your feedback has been submitted.</p>";
+            "<p>Your feedback has been submitted.</p>";
 
     });
 
@@ -257,13 +275,13 @@ function showCompletionPage() {
 
     "<h3>Remember to:</h3>" +
 
-    "<p>âœ” Bring your appointment letter</p>" +
+    "<p>✔ Bring your appointment letter</p>" +
 
-    "<p>âœ” Bring your medication list</p>" +
+    "<p>✔ Bring your medication list</p>" +
 
-    "<p>âœ” Arrange transport home if you're having sedation</p>" +
+    "<p>✔ Arrange transport home if you're having sedation</p>" +
 
-    "<p>âœ” Arrive a little early</p>" +
+    "<p>✔ Arrive a little early</p>" +
 
     "<br>" +
 
@@ -379,6 +397,8 @@ function resetPlan() {
     score = 0;
     completedTasks = 0;
 
+    updateLevel();
+
     perfectTenUnlocked = false;
     championUnlocked = false;
     waterUnlocked = false;
@@ -398,13 +418,22 @@ function resetPlan() {
 
     scoreDisplay.textContent = score;
     progressFill.style.width = "0%";
+    
 
 }
 
 
 function loadProgress() {
 
-achievementCabinet.classList.add("closed");
+    // Start fresh
+    score = 0;
+    completedTasks = 0;
+
+    Object.keys(taskProgress).forEach(function(key) {
+        taskProgress[key] = 0;
+    });
+
+    achievementCabinet.classList.add("closed");
 
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
@@ -415,35 +444,43 @@ achievementCabinet.classList.add("closed");
         if (localStorage.getItem(taskId) === "completed") {
 
             checkbox.checked = true;
+            checkbox.parentElement.classList.add("completed");
 
             const taskType = checkbox.dataset.type;
 
             completedTasks++;
             taskProgress[taskType]++;
-
             score += 10;
+
+        } else {
+
+            checkbox.checked = false;
+            checkbox.parentElement.classList.remove("completed");
 
         }
 
     });
-   
 
     scoreDisplay.textContent = score;
+    updateLevel();
 
-    const percentage = (completedTasks / checkboxes.length) * 100;
+    const percentage = checkboxes.length > 0
+        ? (completedTasks / checkboxes.length) * 100
+        : 0;
+
     progressFill.style.width = percentage + "%";
 
-if(localStorage.getItem("welcomeSeen")==="true"){
+    if (localStorage.getItem("welcomeSeen") === "true") {
 
-    document.getElementById("welcomeScreen").style.display="none";
-    document.getElementById("mainApp").style.display="block";
+        document.getElementById("welcomeScreen").style.display = "none";
+        document.getElementById("mainApp").style.display = "block";
 
-}else{
+    } else {
 
-    document.getElementById("welcomeScreen").style.display="block";
-    document.getElementById("mainApp").style.display="none";
+        document.getElementById("welcomeScreen").style.display = "block";
+        document.getElementById("mainApp").style.display = "none";
 
-}
+    }
 
 }
 
@@ -463,13 +500,15 @@ function addCheckboxListeners() {
 
             if (checkbox.checked) {
 
+                checkbox.parentElement.classList.add("completed");
                 score += 10;
                 completedTasks++;
                 taskProgress[taskType]++;
                 localStorage.setItem(taskId, "completed");
 
             } else {
-
+ 
+                checkbox.parentElement.classList.remove("completed");
                 score -= 10;
                 completedTasks--;
                 taskProgress[taskType]--;
@@ -605,131 +644,230 @@ achievementArrow.innerHTML = "<i class='fa-regular fa-square-caret-up'></i>";
 // Add Task //
 
 function addTask(task) {
-    plan.innerHTML +=
-        "<p>" +
-        "<input type='checkbox' data-id='" + task.id +
-        "' data-type='" + task.type + "'>" +
-        task.text +
-        "</p>";
-}
 
-function addTaskList(tasks) {
-     tasks.forEach(function(task) {
-            addTask(task);
-                 });
-}
+    const icons = {
 
-function addStandardDay(date) {
+        senna: "<i class='fa-solid fa-pills'></i>",
+        water: "<i class='fa-solid fa-droplet'></i>",
+        diet: "<i class='fa-solid fa-utensils'></i>",
+        prep: "<i class='fa-solid fa-flask'></i>",
+        fast: "<i class='fa-solid fa-hourglass-half'></i>",
+        end: "<i class='fa-solid fa-flag-checkered'></i>",
+        iron: "<i class='fa-solid fa-prescription-bottle-medical'></i>"
 
-const dayId =
-    date.getFullYear() + "-" +
-    String(date.getMonth() + 1).padStart(2, "0") + "-" +
-    String(date.getDate()).padStart(2, "0");
-    plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
-    if(date.toDateString() === new Date().toDateString()){
+    };
 
-plan.innerHTML += "<h2><i class='fa-solid fa-star'></i> TODAY <i class='fa-solid fa-star'></i></h2>";
-
-}
-
- const tasks = [
-{
-               id: dayId + "-senna",
-               text: "Take Senna (2 tablets at night)",
-               type: "senna"
-},
-{
-               id: dayId + "-water",
-               text: "Drink at least 1L of water",
-               type: "water"
-},
-{
-                id: dayId + "-diet",
-                text: "Follow a low residue diet",
-                type: "diet"
-}
-              ];
-
-addTaskList(tasks);
-
-    plan.innerHTML += "<hr>";
+    return `
+        <label class="task">
+            <input
+                type="checkbox"
+                data-id="${task.id}"
+                data-type="${task.type}">
+            ${icons[task.type]}
+            <span>${task.text}</span>
+        </label>
+    `;
 
 }
+
+function addTaskList(tasks){
+
+    let html = "";
+
+    tasks.forEach(function(task){
+
+        html += addTask(task);
+
+    });
+
+    return html;
+
+}
+
+// Standard Day //
+
+function addStandardDay(date, day) {
+
+    const dayId =
+        date.getFullYear() + "-" +
+        String(date.getMonth() + 1).padStart(2,"0") + "-" +
+        String(date.getDate()).padStart(2,"0");
+
+    const isToday =
+        date.toDateString() === new Date().toDateString();
+
+    let tasks = [];
+
+    // 7 days before
+    if (day === 7) {
+
+        tasks.push({
+            id: dayId + "-iron",
+            text: "Stop taking iron tablets (if prescribed)",
+            type: "iron"
+        });
+
+    }
+
+    // 5, 4, 3 and 2 days before
+    if (day <= 5) {
+
+        tasks.push({
+            id: dayId + "-senna",
+            text: "Take Senna (2 tablets at night)",
+            type: "senna"
+        });
+
+        tasks.push({
+            id: dayId + "-water",
+            text: "Drink at least 1L of water",
+            type: "water"
+        });
+
+        tasks.push({
+            id: dayId + "-diet",
+            text: "Follow a low residue diet",
+            type: "diet"
+        });
+
+    }
+
+    let html = "";
+
+    html += "<div class='daySection";
+
+    if (isToday) {
+        html += " todaySection";
+    }
+
+    html += "' data-date='" + dayId + "'>";
+
+    html += "<h3>" + date.toDateString() + "</h3>";
+
+    if (isToday) {
+
+        html +=
+        "<h2 style='color:#d89b00;'>" +
+        "<i class='fa-solid fa-star'></i> TODAY" +
+        "</h2>";
+
+    }
+
+    html += addTaskList(tasks);
+
+    html += "</div>";
+
+    plan.innerHTML += html;
+
+}
+
+
+// Day before //
 
 function addDayBefore(date, appointmentHour) {
 
-     const dayId =
-    date.getFullYear() + "-" +
-    String(date.getMonth() + 1).padStart(2, "0") + "-" +
-    String(date.getDate()).padStart(2, "0");
+    const dayId =
+        date.getFullYear() + "-" +
+        String(date.getMonth() + 1).padStart(2, "0") + "-" +
+        String(date.getDate()).padStart(2, "0");
 
-    plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
-if(date.toDateString() === new Date().toDateString()){
+    const isToday =
+        date.toDateString() === new Date().toDateString();
 
-plan.innerHTML += "<h2> <i class='fa-solid fa-star'></i> TODAY <i class='fa-solid fa-star'></i> </h2>";
+    let tasks = [];
 
-}
-    // Daytime appointment (08:00â€“16:59)
+    // Daytime appointments
     if (appointmentHour >= 8 && appointmentHour < 17) {
 
-    const tasks = [
-{              
-              id: dayId + "-diet",  
-              text: "Low residue diet until 15:00",
-              type: "diet"
-},
-{
-                   id: dayId + "-fast",
-                   text:"15:00 No further food or milky drinks. Only drink clear fluids",
-                    type:"fast"
-},
-{
-                    id: dayId + "-prep",
-                   text: "19:00 Mix and start drinking your first dose of Plenvu",
-                   type: "prep"
-}
-                  ];
-          addTaskList(tasks);
+        tasks = [
+
+            {
+                id: dayId + "-diet",
+                text: "Low residue diet until 15:00",
+                type: "diet"
+            },
+
+            {
+                id: dayId + "-fast",
+                text: "15:00 No further food or milky drinks. Only drink clear fluids",
+                type: "fast"
+            },
+
+            {
+                id: dayId + "-prep",
+                text: "19:00 Mix and start drinking your first dose of Plenvu",
+                type: "prep"
+            }
+
+        ];
+
     }
 
-    // Evening appointment (17:00 onwards)
+    // Evening appointments
     else {
 
-         const tasks = [
-{                       
-                 id: dayId + "-senna",
-                 text: "Take Senna (2 tablets at night)",
-                 type: "senna"
-},
-{
-                         id: dayId + "-water",
-                        text: "Drink at least 1L of water", 
-                        type:"water"
-},
-{
-                         id: dayId + "-diet",
-                        text:"Low residue diet until 21:00",
-                        type:"diet"
-},
-{
-                         id: dayId + "-fast",
-                         text:"21:00 No further food or milky drinks. Only drink clear fluids",
-                         type:"fast"
-}
-                         ];
-               addTaskList(tasks);
+        tasks = [
+
+            {
+                id: dayId + "-senna",
+                text: "Take Senna (2 tablets at night)",
+                type: "senna"
+            },
+
+            {
+                id: dayId + "-water",
+                text: "Drink at least 1L of water",
+                type: "water"
+            },
+
+            {
+                id: dayId + "-diet",
+                text: "Low residue diet until 21:00",
+                type: "diet"
+            },
+
+            {
+                id: dayId + "-fast",
+                text: "21:00 No further food or milky drinks. Only drink clear fluids",
+                type: "fast"
+            }
+
+        ];
+
     }
 
-    plan.innerHTML += "<hr>";
+    let html = "";
+
+    html += "<div class='daySection";
+
+    if (isToday) {
+        html += " todaySection";
+    }
+
+    html += "' data-date='" + dayId + "'>";
+
+    html += "<h3>" + date.toDateString() + "</h3>";
+
+    if (isToday) {
+        html += "<h2 style='color:#d89b00;'><i class='fa-solid fa-star'></i> TODAY</h2>";
+    }
+
+    html += addTaskList(tasks);
+
+    html += "</div>";
+
+    plan.innerHTML += html;
 
 }
+
+// Appointment day //
 
 function addAppointmentDay(date, appointmentHour) {
 
     const dayId =
-    date.getFullYear() + "-" +
-    String(date.getMonth() + 1).padStart(2, "0") + "-" +
-    String(date.getDate()).padStart(2, "0");
+        date.getFullYear() + "-" +
+        String(date.getMonth() + 1).padStart(2, "0") + "-" +
+        String(date.getDate()).padStart(2, "0");
 
     const secondDose = new Date(date);
     secondDose.setHours(appointmentHour - 5);
@@ -737,63 +875,95 @@ function addAppointmentDay(date, appointmentHour) {
     const stopDrinking = new Date(date);
     stopDrinking.setHours(appointmentHour - 2);
 
-    
-    plan.innerHTML += "<h3>" + date.toDateString() + "</h3>";
- if(date.toDateString() === new Date().toDateString()){
+    const isToday =
+        date.toDateString() === new Date().toDateString();
 
-plan.innerHTML += "<h2><i class='fa-solid fa-star'></i> TODAY <i class='fa-solid fa-star'></i></h2>";
+    let tasks = [];
 
-}
-
-    // Evening appointments get an extra first dose
-
- const tasks = [];
     if (appointmentHour >= 17) {
 
-        tasks.push({ 
-                    id: dayId + "-prep1",
-                    text: "07:00 Mix and start drinking your first dose of Plenvu",
-                     type: "prep"
-});
+        tasks.push({
 
-}
+            id: dayId + "-prep1",
+            text: "07:00 Mix and start drinking your first dose of Plenvu",
+            type: "prep"
 
-tasks.push({
-    id: dayId + "-prep2",
-    text:
-        secondDose.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit"
-        }) +       
-" Mix and start drinking your second dose of Plenvu",
+        });
 
-    type: "prep"
-});
+    }
 
-tasks.push({
-    id: dayId + "-final",
-    text:
-        stopDrinking.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit"
-        }) +
-        " Stop drinking. Do not eat or drink anything else until your appointment.",
+    tasks.push({
+
+        id: dayId + "-prep2",
+        text:
+            secondDose.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit"
+            }) +
+            " Mix and start drinking your second dose of Plenvu",
+
+        type: "prep"
+
+    });
+
+    tasks.push({
+
+        id: dayId + "-final",
+        text:
+            stopDrinking.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit"
+            }) +
+            " Stop drinking. Do not eat or drink anything else until your appointment.",
+
         type: "end"
-});
-addTaskList(tasks);
-    plan.innerHTML += "<hr>";
+
+    });
+
+    let html = "";
+
+    html += "<div class='daySection";
+
+    if (isToday) {
+        html += " todaySection";
+    }
+
+    html += "' data-date='" + dayId + "'>";
+
+    html += "<h3>" + date.toDateString() + "</h3>";
+
+    if (isToday) {
+        html += "<h2 style='color:#d89b00;'><i class='fa-solid fa-star'></i> TODAY</h2>";
+    }
+
+    html += addTaskList(tasks);
+
+    html += "</div>";
+
+    plan.innerHTML += html;
 
 }
-
 
 // Create Plan //
 
+
 function createPlan() {
 
-    const appointment = new Date(appointmentDate.value);
+    const newDate = appointmentDate.value;
+    const savedDate = localStorage.getItem("appointmentDate");
+
+    const isNewAppointment = savedDate !== null && savedDate !== newDate;
+
+    if (isNewAppointment) {
+        resetPlan();
+        localStorage.clear();
+    }
+
+    localStorage.setItem("appointmentDate", newDate);
+
+    const appointment = new Date(newDate);
     const appointmentHour = appointment.getHours();
 
-    resetPlan();
 
     plan.innerHTML = "<h2>Your 7 Day Plan</h2>";
 
@@ -804,7 +974,7 @@ function createPlan() {
 
         if (day > 1) {
 
-            addStandardDay(currentDate);
+            addStandardDay(currentDate, day);
 
         }
         else if (day === 1) {
@@ -837,7 +1007,9 @@ document.querySelectorAll("[data-type='prep']").length;
 taskTotals.fast =
 document.querySelectorAll("[data-type='fast']").length;
 
+    if (!isNewAppointment) {
     loadProgress();
+}
 
     addFAQListeners();
 
@@ -920,9 +1092,8 @@ createPlanButton.addEventListener("click", function () {
         return;
     }
 
+    createPlan();
 
-localStorage.setItem("appointmentDate", appointmentDate.value);
-createPlan();
 });
 
     
@@ -940,10 +1111,16 @@ clearDateButton.addEventListener("click", function () {
         appointmentDate.value = "";
         plan.innerHTML = "";
 
-        resetPlan(); 
-        renderAchievements();
-       localStorage.clear();
-        
+
+       resetPlan();
+
+localStorage.clear();
+
+renderAchievements();
+
+updateLevel();
+
+scoreDisplay.textContent = score;
 
 
     }
