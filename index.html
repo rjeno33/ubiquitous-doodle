@@ -62,7 +62,7 @@
     <i class="fa-solid fa-trophy"></i>
     Achievements
     <span id="achievementCount">(0/7)</span>
-    <span id="achievementArrow">▼</span>
+    <span id="achievementArrow"><i class='fa-regular fa-square-caret-down'></i></span>
 </h2>
 
 <div id="achievementCabinet">
@@ -71,10 +71,34 @@
 <h2 id="faqHeader">
     <i class="fa-solid fa-circle-question"></i>
     Frequently Asked Questions
-    <span id="faqArrow">▼</span>
+    <span id="faqArrow"><i class='fa-regular fa-square-caret-down'></i></span>
 </h2>
 
 <div id="faqContent" class="closed">
+
+<div class="faqItem">
+
+    <button class="faqQuestion">
+        What is a colonoscopy?
+    </button>
+
+    <div class="faqAnswer">
+
+        <p>
+            A colonoscopy is a test that allows a specially trained clinician
+            to examine the lining of your large bowel using a thin flexible
+            camera. The test helps diagnose bowel symptoms and screen for
+            bowel disease.
+        </p>
+
+        <button onclick="window.open('https://vimeo.com/272615938','_blank')">
+            <i class="fa-solid fa-circle-play"></i>
+            Watch 3-minute video
+        </button>
+
+    </div>
+
+</div>
 
     <div class="faqItem">
         <button class="faqQuestion">
@@ -102,7 +126,14 @@
         </button>
 
         <div class="faqAnswer">
-            A low residue diet leaves less material inside your bowel, making the bowel preparation more effective.
+           <p> A low residue diet leaves less material inside your bowel, making the bowel preparation more effective.</p>
+     
+        <a href="https://publicdocuments.sth.nhs.uk/pil5472%20(1).pdf"
+   target="_blank"
+   class="buttonLink">
+    <i class="fa-regular fa-file"></i>
+    Low residue diet sheet
+</a>
         </div>
     </div>
 
@@ -148,6 +179,33 @@
 
 </div>
 
+<p>Age group</p>
+
+<select id="ageGroup">
+    <option value="">Please select</option>
+    <option>18–29</option>
+    <option>30–39</option>
+    <option>40–49</option>
+    <option>50–59</option>
+    <option>60–69</option>
+    <option>70+</option>
+</select>
+
+<p>Gender (optional)</p>
+
+<select id="gender">
+    <option value="">Prefer not to say</option>
+    <option>Female</option>
+    <option>Male</option>
+    <option>Non-binary</option>
+    <option>Self describe</option>
+</select>
+
+<p>Is this your first colonoscopy?</p>
+
+<label><input type="radio" name="firstTime" value="Yes"> Yes</label>
+<label><input type="radio" name="firstTime" value="No"> No</label>
+
     <p>Did this app help you prepare?</p>
 
     <label>
@@ -167,6 +225,25 @@
 
     <br><br>
 
+<p>Did this app reduce your anxiety about your preparation?</p>
+
+<label><input type="radio" name="anxiety" value="Yes"> Yes</label>
+<label><input type="radio" name="anxiety" value="Somewhat"> Somewhat</label>
+<label><input type="radio" name="anxiety" value="No"> No</label>
+
+<p>Would you recommend this app to another patient?</p>
+
+<label><input type="radio" name="recommend" value="Yes"> Yes</label>
+<label><input type="radio" name="recommend" value="Maybe"> Maybe</label>
+<label><input type="radio" name="recommend" value="No"> No</label>
+
+<p> What device did you use?</p>
+<select id="device">
+    <option>Phone</option>
+    <option>Tablet</option>
+    <option>Computer</option>
+</select>
+
     <p>Any suggestions?</p>
 
     <textarea id="comments"
@@ -184,8 +261,10 @@
 <h2 id="helpful-info">Helpful information</h2>
 <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjfvtzkmb6VAxUOQkEAHVxUGD8QFnoECCQQAQ&url=https%3A%2F%2Felht.nhs.uk%2Fapplication%2Ffiles%2F3315%2F8556%2F0327%2FDIET-002-LowFibrelowresiduediet-2019.pdf&usg=AOvVaw0Uk25ESOMN47N5drxUEGEp&opi=89978449" target="_blank"> Low Residue Diet </a>
 <hr>
+<p> Colonoscopy Companion v1.0 beta </p>
 <p> Created By </p>
 <p> Ryan Jennings </p>
+<p> Disclaimer : This app is designed to support your preparation. Always follow the advice from your healthcare provider or discuss with them if you have any queries or their advice differs from that provided here</p>
 </div>
 
 
